@@ -11,15 +11,44 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: Text('My Flutter App!'),
         centerTitle: true,
-        backgroundColor: Colors.red[600],
+        backgroundColor: Colors.red[800],
       ),
-      body: Center(
-        child: Image.asset('assets/space-2.jpg'),
+      body: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 3,
+            child: Image.asset('assets/img/space-2.jpg')
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.all(30.0),
+              color: Colors.cyan,
+              child: Text('1'),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.all(30.0),
+              color: Colors.pinkAccent,
+              child: Text('2'),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.all(30.0),
+              color: Colors.amber,
+              child: Text('3'),
+            ),
+          ),
+        ]
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {  },
           child: Text('click!'),
-          backgroundColor: Colors.red[600]
+          backgroundColor: Colors.red[800]
       ),
     );
   }
