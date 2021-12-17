@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hello_timezone/services/world_time.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loading extends StatefulWidget {
 
@@ -38,29 +39,12 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(50.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('loading...'),
-              SizedBox(height: 10.0),
-              TextButton(
-                  child: Text(
-                    'Reload',
-                    style: TextStyle(
-                      color: Colors.white
-                    ),
-                  ),
-                  onPressed: setupWorldTime,
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
-              ),
-            ],
-          ),
-        )
+      backgroundColor: Colors.blue[900],
+      body: Center(
+        child: SpinKitThreeBounce(
+          color: Colors.white,
+          size: 50.0,
+        ),
       )
     );
   }
