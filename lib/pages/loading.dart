@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:hello_timezone/services/world_time.dart';
 
 class Loading extends StatefulWidget {
 
@@ -10,43 +9,49 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
 
-  void getTime() async {
-    var response = await http.get(Uri.parse('http://worldtimeapi.org/api/timezone/Asia/Jakarta'));
-    Map data = jsonDecode(response.body);
-    // print(data);
+  String time = 'loading...';
 
-    String datetime = data['datetime'];
-    String offset = data['utc_offset'].substring(1, 3);
-    // print(datetime);
-    // print(offset);
-
-    DateTime now  = DateTime.parse(datetime);
-    now = now.add(Duration(hours: int.parse(offset)));
-    print(now);
+  void setupWorldTime() async {
+    WorldTime instance = WorldTime(location: 'Jakarta', flag: 'assets/img/jakarta.png', url: 'Asia/Jakarta');
+    await instance.getTime();
+    print(instance.time);
+    setState(() {
+      time = instance.time;
+    });
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getTime();
+    setupWorldTime();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: TextButton(
-            child: Text(
-              'Reload',
-              style: TextStyle(
-                color: Colors.white
+        child: Padding(
+          padding: const EdgeInsets.all(50.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(time),
+              SizedBox(height: 10.0),
+              TextButton(
+                  child: Text(
+                    'Reload',
+                    style: TextStyle(
+                      color: Colors.white
+                    ),
+                  ),
+                  onPressed: setupWorldTime,
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
               ),
-            ),
-            onPressed: getTime,
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-            ),
+            ],
+          ),
         )
       )
     );
